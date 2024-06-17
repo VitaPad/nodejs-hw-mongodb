@@ -4,8 +4,8 @@ import pino from 'pino-http';
 import dotenv from 'dotenv';
 import { env } from './utils/env.js';
 import { ENV_VARS } from './constants/index.js';
-import { errorHandlerMiddleware } from './middlewares/errorhandlerMiddleware.js';
 import { notFoundMiddlewares } from './middlewares/notFoundMiddlewares.js';
+import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js';
 import { getAllContacts, getContactById } from './services/contacts.js';
 
 dotenv.config();
