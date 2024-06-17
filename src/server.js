@@ -42,7 +42,7 @@ export function setupServer() {
     if (!contact) {
       return res.status(404).json({
         stateus: 404,
-        message: 'Student with id ${id} not found',
+        message: `Student with id ${id} not found`,
       });
     }
     res.json({
