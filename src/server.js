@@ -28,7 +28,7 @@ export function setupServer() {
     }),
   );
 
-  app.use('/api/contacts', contactsRouter);
+  app.use('/contacts', contactsRouter);
 
   app.use(notFoundMiddlewares);
   app.use(errorHandlerMiddleware);
