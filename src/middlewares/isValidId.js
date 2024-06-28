@@ -8,6 +8,7 @@ export const isvalidId = (req, res, next) => {
       createHttpError(404, {
         status: 404,
         message: 'Route not found',
+        data: {},
       }),
     );
   }
