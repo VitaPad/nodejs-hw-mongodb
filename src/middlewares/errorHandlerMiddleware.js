@@ -3,5 +3,4 @@ export const errorHandlerMiddleware = (err, req, res, next) => {
     message: 'Something went wrong',
     error: err.message,
   });
-  next();
 };
