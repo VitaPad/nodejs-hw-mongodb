@@ -1,6 +1,11 @@
 export const errorHandlerMiddleware = (err, req, res, next) => {
-  res.status(500).json({
-    message: 'Something went wrong',
-    error: err.message,
+  const status = err.status || 500;
+  const message = err.message || 'Something went wrong';
+  const data = err.data || {};
+
+  res.status(status).json({
+    status,
+    message,
+    data,
   });
 };

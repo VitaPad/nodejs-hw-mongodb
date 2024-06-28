@@ -44,8 +44,8 @@ export const addContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const id = req.params.contactId;
-  const result = await upserContact({ _id: id }, req.body);
-  if (!result) {
+  const contact = await upserContact({ _id: id }, req.body);
+  if (!contact) {
     throw createHttpError(404, {
       status: 404,
       message: `Student with id ${id} not found`,
@@ -55,14 +55,14 @@ export const patchContactController = async (req, res) => {
   res.json({
     status: 200,
     message: 'Successfully patched a contact!',
-    data: result.contact,
+    data: contact,
   });
 };
 
 export const deleteContactController = async (req, res) => {
   const id = req.params.contactId;
-  const result = await deleteContact({ _id: id });
-  if (!result) {
+  const contact = await deleteContact({ _id: id });
+  if (!contact) {
     throw createHttpError(404, {
       status: 404,
       message: `Student with id ${id} not found`,
