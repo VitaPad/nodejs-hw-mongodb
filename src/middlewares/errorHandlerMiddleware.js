@@ -1,11 +1,19 @@
-export const errorHandlerMiddleware = (err, req, res, next) => {
-  const status = err.status || 500;
-  const message = err.message || 'Something went wrong';
-  const data = err.data || {};
+import HttpError from 'http-errors';
 
+export const errorHandlerMiddleware = (error, req, res, next) => {
+  if (error instanceof HttpError) {
+    const { status, message, errors } = error;
+    res.status(status).json({
+      status,
+      message,
+      data: errors || error,
+    });
+    return;
+  }
+  const { status = 500, message = 'Something went wrong' } = error;
   res.status(status).json({
     status,
     message,
-    data,
+    data: error.message,
   });
 };

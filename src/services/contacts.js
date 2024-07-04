@@ -12,7 +12,8 @@ export const addContact = async (data) => {
 };
 export const upserContact = async (filter, data, options = {}) => {
   const result = await Contact.findOneAndUpdate(filter, data, {
-    new: true,
+    /*   new: true,
+    runValidators: true, */
     includeResultMetadata: true,
     ...options,
   });
