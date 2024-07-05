@@ -2,11 +2,10 @@ import HttpError from 'http-errors';
 
 export const errorHandlerMiddleware = (error, req, res, next) => {
   if (error instanceof HttpError) {
-    const { status, message, errors } = error;
-    res.status(status).json({
-      status,
-      message,
-      data: errors || error,
+    res.status(error.status).json({
+      status: error.status,
+      message: error.name,
+      data: error,
     });
     return;
   }
@@ -14,6 +13,6 @@ export const errorHandlerMiddleware = (error, req, res, next) => {
   res.status(status).json({
     status,
     message,
-    data: error.message,
+    data: error,
   });
 };
