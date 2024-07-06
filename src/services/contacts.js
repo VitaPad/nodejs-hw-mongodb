@@ -9,7 +9,7 @@ export const getAllContacts = async ({
 }) => {
   const skip = (page - 1) * perPage;
   const totalItems = await Contact.countDocuments();
-  const items = await Contact.find({})
+  const data = await Contact.find({})
     .skip(skip)
     .limit(perPage)
     .sort({ [sortBy]: sortOrder });
@@ -19,7 +19,7 @@ export const getAllContacts = async ({
     page,
   });
   return {
-    items,
+    data,
     totalItems,
     page,
     perPage,
