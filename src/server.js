@@ -9,7 +9,6 @@ import { notFoundMiddlewares } from './middlewares/notFoundMiddlewares.js';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js';
 import { contactsRouter } from './routers/contacts.js';
 import { authRouter } from './routers/auth.js';
-import { authenticate } from './middlewares/authenticate.js';
 
 dotenv.config();
 
@@ -31,7 +30,6 @@ export function setupServer() {
       },
     }),
   );
-  app.use(authenticate);
   app.use('/auth', authRouter);
 
   app.use('/contacts', contactsRouter);
