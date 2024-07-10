@@ -2,6 +2,7 @@ import { Contact } from '../db/models/Contact.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
 
 export const getAllContacts = async ({
+  filter,
   page,
   perPage,
   sortBy = '_id',
@@ -18,6 +19,9 @@ export const getAllContacts = async ({
     perPage,
     page,
   });
+  if (filter.userId) {
+    data.where('userId').equals(filter.userId);
+  }
   return {
     data,
     totalItems,
