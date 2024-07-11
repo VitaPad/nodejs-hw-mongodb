@@ -1,6 +1,5 @@
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { isvalidId } from '../middlewares/isValidId.js';
 import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
 import { validateBody } from '../utils/validateBody.js';
 import {
