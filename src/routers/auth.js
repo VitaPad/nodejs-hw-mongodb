@@ -5,7 +5,7 @@ import { validateBody } from '../utils/validateBody.js';
 import {
   loginUserController,
   logoutUserController,
-  refreshUserSessionController,
+  refreshController,
   registerUserController,
 } from '../controllers/auth.js';
 import { getAllContactController } from '../controllers/contacts.js';
@@ -26,7 +26,7 @@ authRouter.post(
 
 authRouter.post('/logout', ctrlWrapper(logoutUserController));
 
-authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
+authRouter.post('/refresh', ctrlWrapper(refreshController));
 
 /* authRouter.use(authenticate); */
 

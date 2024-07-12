@@ -31,8 +31,9 @@ export const getAllContactController = async (req, res) => {
 };
 
 export const getContactByIdController = async (req, res) => {
+  const { _id: userId } = req.user;
   const id = req.params.contactId;
-  const contact = await getContactById(id);
+  const contact = await getContactById(id, userId);
   if (!contact) {
     throw createHttpError(404, {
       status: 404,
@@ -57,8 +58,9 @@ export const addContactController = async (req, res) => {
 };
 
 export const patchContactController = async (req, res) => {
+  const { _id: userId } = req.user;
   const id = req.params.contactId;
-  const contact = await upserContact({ _id: id }, req.body);
+  const contact = await upserContact({ _id: id, userId }, req.body);
   if (!contact) {
     throw createHttpError(404, {
       status: 404,
@@ -73,8 +75,9 @@ export const patchContactController = async (req, res) => {
 };
 
 export const deleteContactController = async (req, res) => {
+  const { _id: userId } = req.user;
   const id = req.params.contactId;
-  const contact = await deleteContact({ _id: id });
+  const contact = await deleteContact({ _id: id, userId });
   if (!contact) {
     throw createHttpError(404, {
       status: 404,
