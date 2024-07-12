@@ -9,7 +9,6 @@ import {
   registerUserController,
 } from '../controllers/auth.js';
 import { getAllContactController } from '../controllers/contacts.js';
-import { authenticate } from '../middlewares/authenticate.js';
 
 export const authRouter = express.Router();
 
@@ -29,6 +28,6 @@ authRouter.post('/logout', ctrlWrapper(logoutUserController));
 
 authRouter.post('/refresh', ctrlWrapper(refreshUserSessionController));
 
-authRouter.use(authenticate);
+/* authRouter.use(authenticate); */
 
 authRouter.get('/', ctrlWrapper(getAllContactController));
