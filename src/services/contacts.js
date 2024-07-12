@@ -39,14 +39,14 @@ export const getAllContacts = async ({
 export const getContactById = async (id) => {
   return await Contact.findById(id);
 };
-export const addContact = async (data, userId) => {
-  const newData = { ...data, userId };
+export const addContact = async (data) => {
+  const newData = { ...data };
   return await Contact.create(newData);
 };
 export const upserContact = async (filter, data, options = {}) => {
   const result = await Contact.findOneAndUpdate(filter, data, {
-    /*   new: true,
-    runValidators: true, */
+    new: true,
+    runValidators: true,
     includeResultMetadata: true,
     ...options,
   });
