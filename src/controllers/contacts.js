@@ -33,7 +33,7 @@ export const getAllContactController = async (req, res) => {
 export const getContactByIdController = async (req, res) => {
   const { _id: userId } = req.user;
   const id = req.params.contactId;
-  const contact = await getContactById(id, userId);
+  const contact = await getContactById({ id, userId });
   if (!contact) {
     throw createHttpError(404, {
       status: 404,

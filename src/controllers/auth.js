@@ -70,6 +70,7 @@ const setupResponseSession = (
 };
 
 export const refreshController = async (req, res) => {
+  console.log(req.cookies);
   const { refreshToken, sessionId } = req.cookies;
   const currentSession = await findSession({ _id: sessionId, refreshToken });
 
