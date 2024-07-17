@@ -96,3 +96,5 @@ export const refreshController = async (req, res) => {
     },
   });
 };
+
+export const sendResetPasswordEmailController = async (req, res) => {};

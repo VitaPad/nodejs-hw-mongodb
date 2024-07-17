@@ -31,3 +31,5 @@ authRouter.post('/refresh', ctrlWrapper(refreshController));
 /* authRouter.use(authenticate); */
 
 authRouter.get('/', ctrlWrapper(getAllContactController));
+
+authRouter.post('/request-reset-email', ctrlWrapper());
