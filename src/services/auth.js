@@ -1,10 +1,13 @@
 import createHttpError from 'http-errors';
+import jwt from 'jsonwebtoken';
 import { User } from '../db/models/User.js';
 
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { SessionsCollection } from '../db/models/session.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { ENV_VARS, FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { env } from '../utils/env.js';
+import { sendMail } from '../utils/sendMail.js';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
@@ -87,4 +90,34 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     userId: session.userId,
     ...newSession,
   });
+};
+
+export const sendResetPassword = async (email) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+  const resetToken = jwt.sign(
+    {
+      /*   sub: user._id, */
+      email,
+    },
+    env(ENV_VARS.JWT_SECRET),
+    {
+      expiresIn: '5m',
+    },
+  );
+  try {
+    await sendMail({
+      html: `<h1>Hello!</h1>
+      <p> Here is you reset link <a href="${env(
+        ENV_VARS.APP_DOMAIN,
+      )}/reset your password?token="${resetToken}"></a></p>`,
+      to: email,
+      from: env(ENV_VARS.SMTP_USER),
+    });
+  } catch (error) {
+    console.log(error);
+    throw createHttpError(500, 'Problem with sending emails');
+  }
 };

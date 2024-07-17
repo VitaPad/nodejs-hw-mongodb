@@ -1,12 +1,17 @@
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { loginUserSchema, registerUserSchema } from '../validation/auth.js';
+import {
+  loginUserSchema,
+  registerUserSchema,
+  sendResetPasswordEmailSchema,
+} from '../validation/auth.js';
 import { validateBody } from '../utils/validateBody.js';
 import {
   loginUserController,
   logoutUserController,
   refreshController,
   registerUserController,
+  sendResetPasswordEmailController,
 } from '../controllers/auth.js';
 import { getAllContactController } from '../controllers/contacts.js';
 
@@ -31,3 +36,9 @@ authRouter.post('/refresh', ctrlWrapper(refreshController));
 /* authRouter.use(authenticate); */
 
 authRouter.get('/', ctrlWrapper(getAllContactController));
+
+authRouter.post(
+  '/request-reset-email',
+  validateBody(sendResetPasswordEmailSchema),
+  ctrlWrapper(sendResetPasswordEmailController),
+);
