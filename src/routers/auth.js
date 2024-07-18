@@ -3,6 +3,7 @@ import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import {
   loginUserSchema,
   registerUserSchema,
+  resetPasswordSchema,
   sendResetPasswordEmailSchema,
 } from '../validation/auth.js';
 import { validateBody } from '../utils/validateBody.js';
@@ -11,6 +12,7 @@ import {
   logoutUserController,
   refreshController,
   registerUserController,
+  resetPasswordController,
   sendResetPasswordEmailController,
 } from '../controllers/auth.js';
 import { getAllContactController } from '../controllers/contacts.js';
@@ -38,7 +40,13 @@ authRouter.post('/refresh', ctrlWrapper(refreshController));
 authRouter.get('/', ctrlWrapper(getAllContactController));
 
 authRouter.post(
-  '/request-reset-email',
+  '/send-reset-email',
   validateBody(sendResetPasswordEmailSchema),
   ctrlWrapper(sendResetPasswordEmailController),
+);
+
+authRouter.post(
+  '/reset-pwd',
+  validateBody(resetPasswordSchema),
+  ctrlWrapper(resetPasswordController),
 );

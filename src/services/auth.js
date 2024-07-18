@@ -99,7 +99,7 @@ export const sendResetPassword = async (email) => {
   }
   const resetToken = jwt.sign(
     {
-      /*   sub: user._id, */
+      sub: user._id,
       email,
     },
     env(ENV_VARS.JWT_SECRET),
@@ -110,14 +110,31 @@ export const sendResetPassword = async (email) => {
   try {
     await sendMail({
       html: `<h1>Hello!</h1>
-      <p> Here is you reset link <a href="${env(
+      <p> Here is your reset link <a href="${env(
         ENV_VARS.APP_DOMAIN,
-      )}/reset your password?token="${resetToken}"></a></p>`,
+      )}/reset-password?token=${resetToken}">Reset Password</a></p>`,
       to: email,
-      from: env(ENV_VARS.SMTP_USER),
+      from: env(ENV_VARS.SMTP_FROM),
     });
   } catch (error) {
     console.log(error);
     throw createHttpError(500, 'Problem with sending emails');
   }
+};
+
+export const resetPassword = async ({ token, password }) => {
+  let tokenPayload;
+  try {
+    tokenPayload = jwt.verify(token, env(ENV_VARS.JWT_SECRET));
+  } catch (error) {
+    console.log(error);
+    throw createHttpError(401, error.message);
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  await User.findOneAndUpdate(
+    { _id: tokenPayload.sub, email: tokenPayload.email },
+    { password: hashedPassword },
+  );
 };
