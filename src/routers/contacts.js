@@ -14,6 +14,7 @@ import {
 } from '../validation/contacts.js';
 import { validateBody } from '../utils/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
+import { upload } from '../middlewares/upload.js';
 
 export const contactsRouter = express.Router();
 
@@ -29,7 +30,8 @@ contactsRouter.get(
 
 contactsRouter.post(
   '/',
-  validateBody(createContactSchema),
+  upload.single('avatar'),
+    validateBody(createContactSchema),
   ctrlWrapper(addContactController),
 );
 

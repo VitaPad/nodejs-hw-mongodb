@@ -5,9 +5,17 @@ import { User } from '../db/models/User.js';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { SessionsCollection } from '../db/models/session.js';
-import { ENV_VARS, FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import {
+  ENV_VARS,
+  FIFTEEN_MINUTES,
+  ONE_DAY,
+  TEMPLATE_DIR,
+} from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { sendMail } from '../utils/sendMail.js';
+import Handlebars from 'handlebars';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
@@ -107,12 +115,21 @@ export const sendResetPassword = async (email) => {
       expiresIn: '5m',
     },
   );
+
+  const templateSourse = await fs.readFile(
+    path.join(TEMPLATE_DIR, 'reset-password-email.html'),
+  );
+
+  const template = Handlebars.compile(templateSourse.toString());
+
+  const html = template({
+    name: user.name,
+    link: `${env(ENV_VARS.APP_DOMAIN)}/reset-password?token=${resetToken}`,
+  });
+
   try {
     await sendMail({
-      html: `<h1>Hello!</h1>
-      <p> Here is your reset link <a href="${env(
-        ENV_VARS.APP_DOMAIN,
-      )}/reset-password?token=${resetToken}">Reset Password</a></p>`,
+      html,
       to: email,
       from: env(ENV_VARS.SMTP_FROM),
     });
