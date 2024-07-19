@@ -13,6 +13,7 @@ export const ENV_VARS = {
   SMTP_FROM: 'SMTP_FROM',
   JWT_SECRET: 'JWT_SECRET',
   APP_DOMAIN: 'APP_DOMAIN',
+  BACKEND_HOST: 'BACKEND_HOST',
 };
 
 export const TEMPLATE_DIR = path.join(process.cwd(), 'src', 'templates');
@@ -21,4 +22,4 @@ export const FIFTEEN_MINUTES = 15 * 60 * 1000;
 export const ONE_DAY = 24 * 60 * 60 * 1000;
 
 export const TEMP_UPLOAD_DIR = path.join(process.cwd(), 'temp');
-export const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
+export const UPLOAD_DIR = path.join(process.cwd(), 'upload');

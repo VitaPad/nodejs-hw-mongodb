@@ -27,6 +27,7 @@ export const contactSchema = new Schema(
       default: 'personal',
     },
     userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
+    photoUrl: { type: String },
   },
   {
     timestamps: true,

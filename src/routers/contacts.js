@@ -30,8 +30,8 @@ contactsRouter.get(
 
 contactsRouter.post(
   '/',
-  upload.single('avatar'),
-    validateBody(createContactSchema),
+  upload.single('photo'),
+  validateBody(createContactSchema),
   ctrlWrapper(addContactController),
 );
 

@@ -1,5 +1,6 @@
 import { Contact } from '../db/models/Contact.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
+import { saveFileToLokalMachine } from '../utils/saveFileToLokalMachine.js';
 
 export const getAllContacts = async ({
   filter,
@@ -36,7 +37,9 @@ export const getContactById = async (filter) => {
   return await Contact.findOne(filter);
 };
 export const addContact = async (data) => {
-  const newData = { ...data };
+  const photoUrl = await saveFileToLokalMachine(data.photo);
+
+  const newData = { ...data, photoUrl };
   return await Contact.create(newData);
 };
 export const upserContact = async (filter, data, options = {}) => {
