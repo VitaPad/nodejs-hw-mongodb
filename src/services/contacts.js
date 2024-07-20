@@ -1,6 +1,8 @@
 import { Contact } from '../db/models/Contact.js';
 import { calcPaginationData } from '../utils/calcPaginationData.js';
-import { saveFileToLokalMachine } from '../utils/saveFileToLokalMachine.js';
+import { saveFile } from '../utils/saveFile.js';
+/* import { saveFileToLokalMachine } from '../utils/saveFileToLokalMachine.js'; */
+/* import { saveToCloudinary } from '../utils/saveToCloudinary.js'; */
 
 export const getAllContacts = async ({
   filter,
@@ -37,13 +39,20 @@ export const getContactById = async (filter) => {
   return await Contact.findOne(filter);
 };
 export const addContact = async (data) => {
-  const photoUrl = await saveFileToLokalMachine(data.photo);
+  /*   const photoUrl = await saveFileToLokalMachine(data.photo); */
+  const photoUrl = await saveFile(data.photo);
 
   const newData = { ...data, photoUrl };
   return await Contact.create(newData);
 };
 export const upserContact = async (filter, data, options = {}) => {
-  const result = await Contact.findOneAndUpdate(filter, data, {
+  let updatedData = { ...data };
+
+  if (data.photo) {
+    const photoUrl = await saveFile(data.photo);
+    updatedData = { ...updatedData, photoUrl };
+  }
+  const result = await Contact.findOneAndUpdate(filter, updatedData, {
     new: true,
     runValidators: true,
     includeResultMetadata: true,

@@ -60,8 +60,9 @@ export const addContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { _id: userId } = req.user;
+  const photo = req.file;
   const id = req.params.contactId;
-  const contact = await upserContact({ _id: id, userId }, req.body);
+  const contact = await upserContact({ _id: id, userId }, req.body, photo);
   if (!contact) {
     throw createHttpError(404, {
       status: 404,

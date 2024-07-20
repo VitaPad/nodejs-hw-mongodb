@@ -4,7 +4,7 @@ import pino from 'pino-http';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { env } from './utils/env.js';
-import { ENV_VARS } from './constants/index.js';
+import { ENV_VARS, UPLOAD_DIR } from './constants/index.js';
 import { notFoundMiddlewares } from './middlewares/notFoundMiddlewares.js';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js';
 import { contactsRouter } from './routers/contacts.js';
@@ -18,6 +18,7 @@ export function setupServer() {
   const app = express();
 
   app.use(express.json());
+  app.use('/uploads', express.static(UPLOAD_DIR));
 
   app.use(cors());
   app.use(pino());
