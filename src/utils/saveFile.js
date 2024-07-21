@@ -5,10 +5,10 @@ import { saveToCloudinary } from './saveToCloudinary.js';
 
 export const saveFile = async (file) => {
   let url;
-  if (env(ENV_VARS.ENABLE_CLOUDINARY) === 'true') {
-    url = await saveToCloudinary(file);
-  } else {
+  if (env(ENV_VARS.ENABLE_CLOUDINARY) === 'false') {
     url = await saveFileToLokalMachine(file);
+  } else {
+    url = await saveToCloudinary(file);
   }
 
   return url;
