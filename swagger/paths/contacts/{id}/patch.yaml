@@ -1,10 +1,17 @@
 tags:
   - Contacts
-summary: Create student
-operationId: createStudent
-description: 'Create a student with payload'
+summary: Update a contact
+operationId: updateContact
+description: 'Update a specific contact by its ID.'
 security:
   - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      description: The ID of the contact to update
 requestBody:
   content:
     multipart/form-data:
@@ -16,6 +23,7 @@ requestBody:
           - userId
           - contactType
           - isFavourite
+          - photoUrl
         properties:
           name:
             description: "Contact's name"
@@ -41,7 +49,7 @@ requestBody:
             format: binary
 responses:
   '201':
-    description: Creates a contact
+    description: Contact successfully updated
     content:
       application/json:
         schema:
@@ -56,9 +64,9 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully created a contact!
+              example: Successfully updated the contact!
             data:
               type: object
-              $ref: '../../components/schemas/contact.yaml'
+              $ref: '../../../components/schemas/contact.yaml'
   '401':
-    $ref: '../../components/responses/401.yaml'
+    $ref: '../../../components/responses/401.yaml'
