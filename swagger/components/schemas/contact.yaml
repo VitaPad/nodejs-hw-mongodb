@@ -1,0 +1,43 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - phoneNumber
+  - isFavourite
+  - contactType
+properties:
+  _id:
+    type: string
+    example: 669e21d21e8c6fb45d510d7c
+  name:
+    type: string
+    example: Vita
+  email:
+    type: string
+    example: v.mars22@ukr.net
+  phoneNumber:
+    type: string
+    example: +123456778
+  isFavourite:
+    type: boolean
+    example: false
+  contactType:
+    type: string
+    enum:
+      - work
+      - home
+      - personal
+    example: personal
+  userId:
+    oneOf:
+      - type: string
+        example: 60d21b4667d0d8992e610c85
+      - type: 'null'
+        example: null
+  photoUrl:
+    oneOf:
+      - type: string
+        example: https://res.cloudinary.com/dkdmj9le5/image/upload/v1721641269/l0dle32j3f63ico6ipfd.jpg
+      - type: 'null'
+        example: null

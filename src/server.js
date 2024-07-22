@@ -9,6 +9,7 @@ import { notFoundMiddlewares } from './middlewares/notFoundMiddlewares.js';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js';
 import { contactsRouter } from './routers/contacts.js';
 import { authRouter } from './routers/auth.js';
+import { swagger } from './middlewares/swagger.js';
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ const PORT = env(ENV_VARS.PORT, '3000');
 
 export function setupServer() {
   const app = express();
+
+  app.use('/api-docs', swagger());
 
   app.use(express.json());
   app.use('/uploads', express.static(UPLOAD_DIR));
