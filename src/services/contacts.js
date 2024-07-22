@@ -39,8 +39,12 @@ export const getContactById = async (filter) => {
   return await Contact.findOne(filter);
 };
 export const addContact = async (data) => {
-  /*   const photoUrl = await saveFileToLokalMachine(data.photo); */
-  const photoUrl = await saveFile(data.photo);
+  let photoUrl;
+  if (data.photo) {
+    photoUrl = await saveFile(data.photo);
+  }
+
+  /*   const photoUrl = await saveFile(data.photo); */
 
   const newData = { ...data, photoUrl };
   return await Contact.create(newData);
