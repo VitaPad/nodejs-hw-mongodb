@@ -17,26 +17,21 @@ requestBody:
     multipart/form-data:
       schema:
         type: object
-        required:
-          - name
-          - phoneNumber
-          - userId
-          - contactType
-          - isFavourite
-          - photoUrl
         properties:
           name:
             description: "Contact's name"
             type: string
             example: 'John Doe'
+          email:
+            type: string
+            example: v.mars22@ukr.net
           phoneNumber:
             description: "Contacts's number"
             type: string
             example: +123456778
-          userId:
-            description: "Contact's parent id"
-            type: string
-            example: 60d21b4667d0d8992e610c85
+          isFavourite:
+            type: boolean
+            example: false
           contactType:
             type: string
             enum:

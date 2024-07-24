@@ -13,9 +13,7 @@ requestBody:
         required:
           - name
           - phoneNumber
-          - userId
-          - contactType
-          - isFavourite
+          - email
         properties:
           name:
             description: "Contact's name"
@@ -25,10 +23,12 @@ requestBody:
             description: "Contacts's number"
             type: string
             example: +123456778
-          userId:
-            description: "Contact's parent id"
+          email:
             type: string
-            example: 60d21b4667d0d8992e610c85
+            example: v.mars22@ukr.net
+          isFavourite:
+            type: boolean
+            example: false
           contactType:
             type: string
             enum:
