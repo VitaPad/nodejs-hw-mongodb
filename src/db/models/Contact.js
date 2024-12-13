@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose';
+import { typeEmail, typeList } from '../../constants/contacts-constans.js';
+import { mongooseSaveError, setUpdateSetting } from './hooks.js';
 
 export const contactSchema = new Schema(
   {
@@ -12,7 +14,7 @@ export const contactSchema = new Schema(
     },
     email: {
       type: String,
-      match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      match: typeEmail,
     },
     isFavourite: {
       type: Boolean,
@@ -20,15 +22,21 @@ export const contactSchema = new Schema(
     },
     contactType: {
       type: String,
-      enum: ['work', 'home', 'personal'],
+      enum: typeList,
       required: true,
       default: 'personal',
     },
+    userId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
   },
   {
     timestamps: true,
     versionKey: false,
   },
 );
+
+contactSchema.post('save', mongooseSaveError);
+
+contactSchema.pre('findOneAndUpdate', setUpdateSetting);
+contactSchema.post('findOneAndUpdate', mongooseSaveError);
 
 export const Contact = model('contacts', contactSchema);

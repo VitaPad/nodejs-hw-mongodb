@@ -2,11 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { env } from './utils/env.js';
 import { ENV_VARS } from './constants/index.js';
 import { notFoundMiddlewares } from './middlewares/notFoundMiddlewares.js';
 import { errorHandlerMiddleware } from './middlewares/errorHandlerMiddleware.js';
 import { contactsRouter } from './routers/contacts.js';
+import { authRouter } from './routers/auth.js';
 
 dotenv.config();
 
@@ -19,6 +21,7 @@ export function setupServer() {
 
   app.use(cors());
   app.use(pino());
+  app.use(cookieParser());
 
   app.use(
     pino({
@@ -27,6 +30,7 @@ export function setupServer() {
       },
     }),
   );
+  app.use('/auth', authRouter);
 
   app.use('/contacts', contactsRouter);
 
